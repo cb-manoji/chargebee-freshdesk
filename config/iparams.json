@@ -1,1 +1,13 @@
-{}
+{
+    "region": {
+        "display_name": "Region",
+        "description": "Please select the Region",
+        "type": "dropdown",
+        "options": [
+          "US",
+          "AU",
+          "EU"
+        ],
+        "default_value": "US"
+    }
+}
