@@ -23,12 +23,12 @@ $(document).ready( function() {
 });
 
 function getRegion(client) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
         client.iparams.get("region").then(
             function(data) {
                 resolve(data["region"].toLowerCase())
               },
-            function(error) {
+            function() {
                 resolve("US".toLowerCase())
             }
         )
@@ -58,11 +58,11 @@ var pluginInit = function($) {
   function _execute(email, region) {
       var _env = {
           site: 'app',
-          region: region,
+          region: region === "us" ? "" : `.${region}`,
           hostSuffix: '.chargebee.com',
           protocol: "https"
       };
-      cbPath = _env.protocol + "://" + _env.site + `.${_env.region}` + _env.hostSuffix;
+      cbPath = _env.protocol + "://" + _env.site + _env.region + _env.hostSuffix;
       console.log(cbPath);
       detailsUrl = cbPath + _path + encodeURIComponent(email);
       $('#request-error').hide();
