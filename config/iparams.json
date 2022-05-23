@@ -1,7 +1,7 @@
 {
     "region": {
-        "display_name": "Region",
-        "description": "Please select the Region",
+        "display_name": "Chargebee's data hosting centre",
+        "description": "Select your data hosting centre with Chargebee",
         "type": "dropdown",
         "options": [
           "US",

@@ -6,10 +6,8 @@ $(document).ready( function() {
           function() {
               getRegion(client).then(
                   function(region) {
-                      console.log(region);
                       getEmail(client).then(
                           function(email){
-                            console.log("email " + email);
                             var inst = pluginInit.call(window, jQuery);
                             inst.execute(email, region);
                           }
@@ -63,7 +61,6 @@ var pluginInit = function($) {
           protocol: "https"
       };
       cbPath = _env.protocol + "://" + _env.site + _env.region + _env.hostSuffix;
-      console.log(cbPath);
       detailsUrl = cbPath + _path + encodeURIComponent(email);
       $('#request-error').hide();
       loadSummary();
