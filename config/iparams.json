@@ -1,7 +1,7 @@
 {
     "region": {
-        "display_name": "Chargebee's data hosting centre",
-        "description": "Select your data hosting centre with Chargebee",
+        "display_name": "Select your Chargebee account’s data center",
+        "description": "Find your data center by navigating to this link: https://app.chargebee.com/sites/select. Depending on which data center you belong to, your URL will load as follows: US - https://app.chargebee.com/sites/select, AU - https://app.au.chargebee.com/sites/select, EU - https://app.eu.chargebee.com/sites/select.",
         "type": "dropdown",
         "options": [
           "US",
