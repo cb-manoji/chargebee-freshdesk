@@ -4,17 +4,48 @@ $(document).ready( function() {
         var client = _client;
         client.events.on('app.activated',
           function() {
-              client.data.get('contact')
-                  .then(function(data) {
-                      var inst = pluginInit.call(window, jQuery);
-                      inst.execute(data.contact.email);
-                  })
-                  .catch(function(e) {
-                      console.log('Exception - ', e);
-                  });
+              getRegion(client).then(
+                  function(region) {
+                      getEmail(client).then(
+                          function(email){
+                            var inst = pluginInit.call(window, jQuery);
+                            inst.execute(email, region);
+                          }
+                      ).catch(function(error) {
+                        console.log('Exception - ', error);
+                      })
+                  }
+              )
       });
   });
 });
+
+function getRegion(client) {
+    return new Promise(function(resolve) {
+        client.iparams.get("region").then(
+            function(data) {
+                resolve(data["region"].toLowerCase())
+              },
+            function() {
+                resolve("US".toLowerCase())
+            }
+        )
+    })
+}
+
+function getEmail(client) {
+    return new Promise(function(resolve, reject) {
+        client.data.get('contact').then(
+            function(data) {
+                resolve(data.contact.email)
+              },
+            function(error) {
+                reject(error)
+            }
+        )
+    })
+}
+
 var pluginInit = function($) {
   'use strict';
   var requestTimeOut = null;
@@ -22,13 +53,14 @@ var pluginInit = function($) {
   var cbPath, detailsUrl;
   var window = this;
 
-  function _execute(email) {
+  function _execute(email, region) {
       var _env = {
           site: 'app',
+          region: region === "us" ? "" : `.${region}`,
           hostSuffix: '.chargebee.com',
           protocol: "https"
       };
-      cbPath = _env.protocol + "://" + _env.site + _env.hostSuffix;
+      cbPath = _env.protocol + "://" + _env.site + _env.region + _env.hostSuffix;
       detailsUrl = cbPath + _path + encodeURIComponent(email);
       $('#request-error').hide();
       loadSummary();
